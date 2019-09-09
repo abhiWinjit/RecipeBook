@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output } from '@angular/core';
 import { Recipe } from '../recipes.model';
 import { DropdownDirective } from "../../shared/dropdown.directive";
 import { RecipeService } from '../recipe.service';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-details',
@@ -10,11 +11,21 @@ import { RecipeService } from '../recipe.service';
 })
 export class RecipeDetailsComponent implements OnInit {
   // @Output() appDropdown:DropdownDirective;
-  
-  @Input() recipe: Recipe;
-  constructor(private recipeService:RecipeService) { }
+  recipe: Recipe;
+  id: number;
+  // @Input() recipe: Recipe;
+  //recipe: Recipe;
+  constructor(private recipeService:RecipeService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.params
+      .subscribe(
+        (params:  Params) => {
+          this.id = +params['id'];        //+ used for converting string to number
+          this.recipe = this.recipeService.getRecipe(this.id);
+        }
+      );
   }
 
   onAddToShoppingList() {
