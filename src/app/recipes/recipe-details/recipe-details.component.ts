@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output } from '@angular/core';
 import { Recipe } from '../recipes.model';
 import { DropdownDirective } from "../../shared/dropdown.directive";
 import { RecipeService } from '../recipe.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-details',
@@ -16,7 +16,10 @@ export class RecipeDetailsComponent implements OnInit {
   // @Input() recipe: Recipe;
   //recipe: Recipe;
   constructor(private recipeService:RecipeService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private router: Router) { 
+      
+    }
 
   ngOnInit() {
     this.route.params
@@ -32,4 +35,12 @@ export class RecipeDetailsComponent implements OnInit {
     this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
   }
 
+  onEditRecipe(){
+    // this.router.navigate(['edit'],{relativeTo: this.route});
+    this.router.navigate(['../',this.id,'edit'],{relativeTo: this.route});
+  }
+
+  onDeleteRecipe(){
+
+  }
 }
