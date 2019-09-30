@@ -15,16 +15,16 @@ export class RecipeDetailsComponent implements OnInit {
   id: number;
   // @Input() recipe: Recipe;
   //recipe: Recipe;
-  constructor(private recipeService:RecipeService,
+  constructor(private recipeService: RecipeService,
     private route: ActivatedRoute,
-    private router: Router) { 
-      
-    }
+    private router: Router) {
+
+  }
 
   ngOnInit() {
     this.route.params
       .subscribe(
-        (params:  Params) => {
+        (params: Params) => {
           this.id = +params['id'];        //+ used for converting string to number
           this.recipe = this.recipeService.getRecipe(this.id);
         }
@@ -35,12 +35,12 @@ export class RecipeDetailsComponent implements OnInit {
     this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
   }
 
-  onEditRecipe(){
+  onEditRecipe() {
     // this.router.navigate(['edit'],{relativeTo: this.route});
-    this.router.navigate(['../',this.id,'edit'],{relativeTo: this.route});
+    this.router.navigate(['../', this.id, 'edit'], { relativeTo: this.route });
   }
 
-  onDeleteRecipe(){
-
+  onDeleteRecipe() {
+    this.recipeService.deleteRecipe(this.id);
   }
 }
