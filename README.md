@@ -1,4 +1,9 @@
-# Assignment3
+# RecipeBook
+It as an application to maintain recipes and use it dynamically. It provides a wide variety of service with a storage on firebase.
+As well as you can get authenticated using your own credential.
+
+## Firebase Setup 
+Make your own account create project on firebase with any name. Go to the Firebase database and create new database, use that url and replase in user.data.service.ts file. 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.2.
 
