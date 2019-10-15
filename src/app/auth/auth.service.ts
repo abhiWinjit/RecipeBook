@@ -47,6 +47,7 @@ export class AuthService {
             expirationDate
         );
         this.user.next(user);
+        localStorage.setItem('userData', JSON.stringify(user));
     }
 
     login(email: string, password: string) {
@@ -60,6 +61,28 @@ export class AuthService {
         ).pipe(catchError(this.handleError), tap(resData => {
             this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
         }));
+    }
+
+    autoLogin() {
+        const userData: {
+            email: string;
+            id: string;
+            _token: string;
+            _tokenExpirationDate: string;
+        } = JSON.parse(localStorage.getItem('userData'));
+        if (!userData) {
+            return;
+        }
+
+        const loadedUser = new User(
+            userData.email,
+            userData.id,
+            userData._token,
+            new Date(userData._tokenExpirationDate));
+
+        if (loadedUser.token) {
+            this.user.next(loadedUser);
+        }
     }
 
     logout() {
